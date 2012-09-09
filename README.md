@@ -1,4 +1,6 @@
 iBase64
 =======
 
-an base64 converter for css file
+一个小巧简易的CSS Sprite Image 的Data URI转换器
+
+beta 1.0
