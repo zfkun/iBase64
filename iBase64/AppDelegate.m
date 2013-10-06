@@ -50,6 +50,12 @@
     
     // 等候区 badgeValue
     [self updateWaitBadgeValueTo:0];
+    
+    // 注册 URL Scheme 处理方法
+    [[NSAppleEventManager sharedAppleEventManager] setEventHandler:self
+                                                       andSelector:@selector(handleURLEvent:withReplyEvent:)
+                                                     forEventClass:kInternetEventClass
+                                                        andEventID:kAEGetURL];
 }
 
 
@@ -89,6 +95,22 @@
     
     _convertFileList = [fileList copy];
     [self.converter startWithFileList:_convertFileList];
+}
+
+- (void)handleURLEvent:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent
+{
+    // enum `keyDirectObject` : '----'
+    NSString *url = [[event descriptorForKeyword:keyDirectObject] stringValue];
+
+//    NSLog(@"handleURLEvent: %@ , replay: %@", event, replyEvent);
+    [[NSAlert alertWithMessageText:@"URL Request"
+                    defaultButton:@"OK"
+                  alternateButton:nil
+                      otherButton:nil
+        informativeTextWithFormat:@"%@", url] runModal];
+    
+    // TODO: 解析url，快速执行任务
+    // ...
 }
 
 
