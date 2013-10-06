@@ -56,6 +56,16 @@
                                                        andSelector:@selector(handleURLEvent:withReplyEvent:)
                                                      forEventClass:kInternetEventClass
                                                         andEventID:kAEGetURL];
+    
+    // 实现 NSAlert 风格的显示动画
+    //    1. 设置动画风格( Attributes Inspector: Animation = 'Alert Style' )
+    //    2. 默认隐藏window ( Attributes Inspector: Behavior = 'Visible At Launch' uncheck )
+    //    3. 延迟显示 ()
+    self.window.animationBehavior = NSWindowAnimationBehaviorAlertPanel;
+    self.window.isVisible = NO;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.window makeKeyAndOrderFront:nil];
+    });
 }
 
 
